@@ -1,6 +1,6 @@
 import axios from "axios";
+import { BASE_URL } from "../utils/constants";
 
-const BASE_URL = "https://api.country.is/";
 
 export const get = async () => {
     try {

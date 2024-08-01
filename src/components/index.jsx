@@ -17,6 +17,7 @@ import tr from '../assets/request/turkey.png';
 import uae from '../assets/request/uae.png';
 import us from '../assets/request/us.png';
 import uss from '../assets/us.png';
+import Texts from './texts.jsx';
 
 const countryOptions = [
     { code: "+90", country: "Turkey", flag: "https://www.countryflags.com/wp-content/uploads/turkey-flag-png-large.png", bgi: tr },
@@ -206,6 +207,7 @@ const Form = () => {
                     </div>
                 </div>
             </div>
+
         </div>
     );
 };
