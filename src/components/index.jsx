@@ -4,16 +4,16 @@ import TextField from '@mui/material/TextField';
 import { Select } from 'antd';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import {get} from '../API/requests.js'
+import { get } from '../API/requests.js'
 import { AsYouType } from 'libphonenumber-js';
 import uss from '../assets/us.png';
-import countryOptions, { LocalCountries } from '../utils/constants';
+import countryOptions, { LocalCountries } from '../utils/constants.tsx';
 
 
 
 
 const Form = () => {
-    const [selectedCountry, setSelectedCountry] = useState(countryOptions[0]);
+    const [selectedCountry, setSelectedCountry] = useState(null);
     const [localCountry, setLocalCountry] = useState(null);
 
     useEffect(() => {
@@ -22,6 +22,7 @@ const Form = () => {
                 const res = await get();
                 if (res.data && res.data.country) {
                     setLocalCountry(res.data.country);
+                    setSelectedCountry(countryOptions.find((x)=>x.localeName==res.data.country) )
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -30,6 +31,8 @@ const Form = () => {
 
         fetchData();
     }, []);
+    console.log(selectedCountry);
+
 
     const validationSchema = yup.object({
         country: yup.string().required('Country is required'),
@@ -38,9 +41,10 @@ const Form = () => {
         email: yup.string().email('Invalid email format').required('Email is required'),
     });
 
+
     const formik = useFormik({
         initialValues: {
-            country: 'Select Country',
+            country: selectedCountry && selectedCountry.country,
             name: '',
             phone: '',
             email: '',
@@ -54,7 +58,7 @@ const Form = () => {
 
     const handlePhoneChange = (e) => {
         const phoneNumber = e.target.value;
-        const formattedNumber = new AsYouType(selectedCountry.code.replace('+', '')).input(phoneNumber);
+        const formattedNumber = new AsYouType(selectedCountry && selectedCountry.code.replace('+', '')).input(phoneNumber);
         formik.setFieldValue('phone', formattedNumber);
     };
 
@@ -95,11 +99,7 @@ const Form = () => {
                                 value={formik.values.name}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                style={{
-                                    borderColor: formik.touched.name && formik.errors.name ? 'red' : '#849ab4',
-                                    borderWidth: '1px',
-                                    borderStyle: 'solid'
-                                }}
+                                className={formik.touched.name && formik.errors.name ? styles.error : ""}
                                 error={formik.touched.name && Boolean(formik.errors.name)}
                             />
                             <label htmlFor="email">Email</label>
@@ -108,26 +108,21 @@ const Form = () => {
                                 fullWidth
                                 id="email"
                                 name="email"
+                                className={formik.touched.email && formik.errors.email ? styles.error : ""}
                                 value={formik.values.email}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                style={{
-                                    borderColor: formik.touched.email && formik.errors.email ? 'red' : '#849ab4',
-                                    borderWidth: '1px',
-                                    borderStyle: 'solid'
-                                }}
                                 error={formik.touched.email && Boolean(formik.errors.email)}
                             />
-                            
+
 
                             <label htmlFor="phone">Phone number</label>
-                            <div className={styles.phoneNumber} style={{
-                                borderColor: formik.touched.phone && formik.errors.phone ? 'red' : '#849ab4',
-                                borderWidth: '1px',
-                                borderStyle: 'solid'
-                            }}>
+                            <div
+                                className={formik.touched.phone && formik.errors.phone ? styles.error : styles.phoneNumber}
+                            >
                                 <Select
-                                    value={selectedCountry.code}
+                                    className={styles.phoneSelect}
+                                    value={selectedCountry && selectedCountry.code}
                                     onChange={handleCountryChange}
                                     style={{ width: '140px' }}
                                     options={countryOptions.map(option => ({
@@ -140,6 +135,7 @@ const Form = () => {
                                         ),
                                     }))}
                                 />
+
                                 <TextField
                                     placeholder='(__) ___-__-__'
                                     fullWidth
@@ -154,10 +150,13 @@ const Form = () => {
 
                             <label htmlFor="country">Country</label>
                             <Select
-                                className={styles.selectt}
+                                
+                                className={formik.touched.country && formik.errors.country ? styles.error : styles.selectt}
                                 id="country"
                                 name="country"
                                 value={formik.values.country}
+                                placeholder='Select Country'
+                                // defaultValue={}
                                 onChange={value => formik.setFieldValue('country', value)}
                                 onBlur={formik.handleBlur}
                             >
