@@ -119,6 +119,7 @@ const Form = () => {
                                 error={formik.touched.email && Boolean(formik.errors.email)}
                             />
                             
+
                             <label htmlFor="phone">Phone number</label>
                             <div className={styles.phoneNumber} style={{
                                 borderColor: formik.touched.phone && formik.errors.phone ? 'red' : '#849ab4',
