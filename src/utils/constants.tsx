@@ -13,3 +13,17 @@ const countryOptions = [
     { code: "+1", country: "United States", flag: "https://www.countryflags.com/wp-content/uploads/united-states-of-america-flag-png-large.png", bgi: us },
 ];
 export default countryOptions;
+
+
+
+export const LocalCountries = {
+    AZ: aze,
+    KAZ: kaz,
+    JOR: jor,
+    KWT: kwt,
+    OM: om,
+    POL: pol,
+    SA: sa,
+    UAE: uae,
+    US: us,
+};

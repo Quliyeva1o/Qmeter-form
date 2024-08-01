@@ -6,32 +6,11 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import {get} from '../API/requests.js'
 import { AsYouType } from 'libphonenumber-js';
-import aze from '../assets/request/azerbaijan.png';
-import jor from '../assets/request/jordon.png';
-import kaz from '../assets/request/kazakhistan.png';
-import kwt from '../assets/request/kuwait.png';
-import om from '../assets/request/oman.png';
-import pol from '../assets/request/poland.png';
-import sa from '../assets/request/saudi_arabia.png';
-import tr from '../assets/request/turkey.png';
-import uae from '../assets/request/uae.png';
-import us from '../assets/request/us.png';
 import uss from '../assets/us.png';
-import countryOptions from '../utils/constants.js';
+import countryOptions, { LocalCountries } from '../utils/constants';
 
 
 
-const LocalCountries = {
-    AZ: aze,
-    KAZ: kaz,
-    JOR: jor,
-    KWT: kwt,
-    OM: om,
-    POL: pol,
-    SA: sa,
-    UAE: uae,
-    US: us,
-};
 
 const Form = () => {
     const [selectedCountry, setSelectedCountry] = useState(countryOptions[0]);
