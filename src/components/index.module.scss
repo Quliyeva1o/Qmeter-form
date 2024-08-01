@@ -1,3 +1,4 @@
+@import "../variables";
 .df {
     width: 100%;
     max-width: 1240px;
@@ -120,7 +121,7 @@
             margin-top: 6px;
             font-size: 14px;
             font-weight: 400;
-            color: #354050;
+            color: $btnColor;
             line-height: 20px;
             font-family: "Sofia Pro", sans-serif;
         }
@@ -128,7 +129,7 @@
             width: 100%;
             position: relative;
             height: 36px;
-            border: 1px solid #849ab4!important;
+            border: 1px solid $borderColor!important;
             border-color: inherit;
             border-radius: 6px;
             font-size: inherit;
@@ -162,7 +163,7 @@
             line-height: 18px;
             width: 100%;
             text-wrap: nowrap;
-            background: #354050;
+            background: $btnColor;
             text-transform: uppercase;
             font-size: 14px !important;
             position: relative;
@@ -183,7 +184,7 @@
 }
 .container {
     margin-top: 40px;
-    background: linear-gradient(269.85deg, #f5f6f8 0.12%, #f4f5f7 99.86%);
+    background: linear-gradient(269.85deg, #f5f6f8 0.12%, $bgColor 99.86%);
     width: 100%;
 }
 .select {
@@ -196,7 +197,7 @@
     background: transparent !important;
     position: relative;
     height: 36px;
-    border: 1px solid #849ab4 !important;
+    border: 1px solid $borderColor !important;
     border-color: inherit;
     border-radius: 6px;
     font-size: inherit;
@@ -238,7 +239,7 @@
         left: 35px;
         background-repeat: repeat;
         height: 100px;
-        background-image: url(../assets/dotss.svg);
+        background-image: url(dotsIcon);
         width: 100px !important;
     }
     @media (max-width: 650px) {
@@ -254,7 +255,7 @@
     left: -40px;
     background-repeat: no-repeat;
     height: 170px;
-    background-color: #f4f5f7;
+    background-color: $bgColor;
     opacity: 1;
     @media (max-width: 992px) {
         left: 70px;
