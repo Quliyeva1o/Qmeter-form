@@ -5,8 +5,9 @@ import { Select } from 'antd';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { get } from '../API/requests.js';
-import { AsYouType } from 'libphonenumber-js';
 import uss from '../assets/us.png';
+import Cookies from 'js-cookie';
+
 import countryOptions, { LocalCountries } from '../utils/constants.tsx';
 
 const validationSchema = yup.object({
@@ -49,7 +50,7 @@ const Form = () => {
 
     const formik = useFormik({
         initialValues: {
-            num: '', // Initial value for country code
+            num: '',
             country: '',
             name: '',
             phone: '',
@@ -57,12 +58,19 @@ const Form = () => {
         },
         validationSchema,
         onSubmit: values => {
-            const formattedNumber = new AsYouType(values.num.replace('+', '')).input(values.phone);
-            console.log({
-                ...values,
-                phone: formattedNumber
-            });
+            const formattedNumber = values.num + values.phone
+         
+
+            Cookies.set('formData', JSON.stringify({
+                name: values.name,
+                phone: formattedNumber,
+                email: values.email,
+                country: values.country
+            }), { expires: 7 }); 
+
+
             formik.resetForm();
+
         },
     });
 
@@ -95,7 +103,7 @@ const Form = () => {
                         id={field.name}
                         name={field.name}
                         className={formik.touched[field.name] && formik.errors[field.name] ? styles.error : styles.selectt}
-                        value={formik.values.country} 
+                        value={formik.values.country}
                         onChange={handleCountryChange}
                         onBlur={formik.handleBlur}
                         options={countryOptions.map(option => ({
